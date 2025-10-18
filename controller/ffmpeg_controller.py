@@ -1,15 +1,15 @@
 import os, json, time, traceback
 from helpers.custom_ffmpeg import CustomFFmpeg
+from helpers.ter import clear_screen
 
 class FFmpegController:
     def __init__(self):
-        print('Initializing FFmpeg Controller')
         self.ffmpeg = CustomFFmpeg()
         
     
     def handle_convert_video(self, arg):
         """
-        Convert video: cvvd <input_file> <output_file>
+        Convert video: cvvd <input_file>
         """
         try:
             if not self.ffmpeg.check_ffmpeg():
@@ -17,7 +17,25 @@ class FFmpegController:
                 return
             arg = arg.strip()
             if not arg:
-                link_file = input(f"Enter the link of the file (Ctrl + Shift + C for copy full path file): ")
+                clear_screen()
+                print("--------------------------------")
+                print("Please enter the link of the file (Ctrl + Shift + C for copy full path file): ")
+                print("--------------------------------")
+                print("Enter 'exit' to exit.")
+                link_file = None
+                while True:
+                    link_file = input("Link file: ")
+                    if link_file == 'exit':
+                        return
+                    if not link_file:
+                        clear_screen()
+                        print("--------------------------------")
+                        print("Please enter the link of the file (Ctrl + Shift + C for copy full path file): ")
+                        print("--------------------------------")
+                        print("Enter 'exit' to exit.")
+                        continue
+                    else:
+                        break
             else:
                 link_file = arg
             if '"' in link_file:
@@ -25,7 +43,9 @@ class FFmpegController:
             if "'" in link_file:
                 link_file = link_file.replace("'", "")
             if "\\" not in link_file:
-                print(f"File {link_file} is not an absolute path.")
+                print(f"File '{link_file}' is not an absolute path. Converting to absolute path...")
+                if "mp4" not in link_file:
+                    link_file = link_file + ".mp4"
                 link_file = os.path.join(os.getcwd(), link_file)
             if not os.path.exists(link_file):
                 print(f"File {link_file} not found.")
@@ -55,7 +75,6 @@ class FFmpegController:
             # output_file = link_file.replace('.mp4', f'_converted.mp4')
             output_file = output_file.replace(' ', '_')
             self.ffmpeg.convert_video(link_file, output_file)
-            # Đóng khung print thông báo
             print("--------------------------------")
             print(f"Convert video success: {output_file}")
             print("--------------------------------")

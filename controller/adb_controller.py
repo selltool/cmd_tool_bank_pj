@@ -3,7 +3,6 @@ from helpers.custom_adb import CustomADB
 
 class ADBController:
     def __init__(self):
-        print('Initializing ADB Controller')
         self.custom_adb = CustomADB()
 
     def handle_nab(self, arg):

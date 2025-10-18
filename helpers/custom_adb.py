@@ -11,7 +11,6 @@ class CustomADB:
         """
         self.devices = []
         self.sn = sn
-        print('Init CustomADB')
 
     def run(self, cmd_list: List[str], timeout: int = 20) -> subprocess.CompletedProcess:
         """

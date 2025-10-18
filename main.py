@@ -27,6 +27,9 @@ class CmdShell(cmd.Cmd):
         """
         print("Goodbye!")
         return True
+    
+    def emptyline(self):
+        pass
 
     def do_nab(self, arg):
         """
@@ -48,3 +51,7 @@ class CmdShell(cmd.Cmd):
 
 if __name__ == '__main__':
     CmdShell().cmdloop()
+
+
+# Command build with pyinstaller
+# pyinstaller -F main.py --onefile -n st_shell -y -i data/icon.ico --clean

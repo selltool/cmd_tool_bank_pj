@@ -3,7 +3,7 @@ from typing import List
 
 class CustomFFmpeg:
     def __init__(self):
-        print('Initializing CustomFFmpeg')
+        pass
         
     def run(self, cmd_list: List[str], timeout: int = 20, capture_output: bool = True, text: bool = True) -> subprocess.CompletedProcess:
         """
@@ -38,13 +38,10 @@ class CustomFFmpeg:
         command = [
             'ffmpeg', '-y',
             '-i', link_file,
-            # '-metadata:s:v:0', 'rotate=180',
-            
-            # '-b:v', '20422k',
-            # '-color_range', 'pc',
-            # '-vf', 'scale=1600:1200',
             '-vf', 'transpose=1',
-            '-movflags', '+use_metadata_tags+faststart',
+            '-b:v', '20422k',
+            '-color_range', 'pc',
+            '-movflags', '+faststart',
             '-c:a', 'copy',
             output_file,
         ]
