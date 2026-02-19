@@ -38,8 +38,15 @@ class CmdShell(cmd.Cmd):
         arg = arg.strip()
         if not arg:
             print("Please enter a serial number.")
+            print("Example: nab 1234567890")
             return
         return self.adb_controller.handle_nab(arg)
+    
+    def do_devices(self, arg):
+        """
+        Get devices: Print all devices
+        """
+        print(self.adb_controller.custom_adb.devices)
         
     def do_cvvd(self, arg):
         """

@@ -136,7 +136,7 @@ class CustomADB:
             return
         fingerprint = self.get_a_prop("ro.odm.build.fingerprint")
         if "oriole" not in fingerprint or "userdebug" not in fingerprint:
-            print("Device is not oriole or userdebug.")
+            print("Device is not oriole or userdebug:", fingerprint)
             return
         # Reboot to bootloader
         self.adb_cmd(["reboot", "bootloader"], self.sn, timeout=10)
@@ -181,7 +181,7 @@ class CustomADB:
             print("Frida is installed.")
         else:
             print("Frida is not installed.")
-            process = self.adb_cmd(["push", "frida-server", "/data/local/tmp"], self.sn)
+            process = self.adb_cmd(["push", "data/frida-server", "/data/local/tmp"], self.sn)
             if process.returncode != 0:
                 print("Error: Failed to push frida.", process.stderr.strip() or process.stdout.strip())
                 return

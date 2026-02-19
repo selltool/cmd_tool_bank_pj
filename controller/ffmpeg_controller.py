@@ -67,6 +67,7 @@ class FFmpegController:
             video_height = streams.get('height')
             if video_width != 1200 or video_height != 1600:
                 print("This video not support, contact developer to support this video.")
+                print(f"Video width: {video_width}, Video height: {video_height}")
                 return
             
             # Convert time to hms
